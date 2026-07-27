@@ -4,9 +4,11 @@
   "description": "Static Word to HTML 1.0 converter site",
   "private": true,
   "scripts": {
-    "deploy": "vercel --prod"
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "devDependencies": {
-    "vercel": "^57.0.0"
+    "vercel": "^57.0.0",
+    "wrangler": "4.114.0"
   }
 }

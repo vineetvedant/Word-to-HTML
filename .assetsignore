@@ -1,0 +1,9 @@
+*
+!index.html
+!app.js
+!styles.css
+!sitemap.xml
+!assets
+!assets/**
+!vedant
+!vedant/**
