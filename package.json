@@ -1,0 +1,12 @@
+{
+  "name": "word-to-html",
+  "version": "1.0.0",
+  "description": "Static Word to HTML 1.0 converter site",
+  "private": true,
+  "scripts": {
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^57.0.0"
+  }
+}
