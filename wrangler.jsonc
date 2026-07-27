@@ -4,8 +4,8 @@
   "compatibility_date": "2026-07-27",
   "routes": [
     {
-      "pattern": "html2word-vedant.thescripter.org",
-      "custom_domain": true
+      "pattern": "html2word-vedant.thescripter.org/*",
+      "zone_name": "thescripter.org"
     }
   ],
   "assets": {
