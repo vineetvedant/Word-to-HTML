@@ -4,7 +4,6 @@
   "description": "Static Word to HTML 1.0 converter site",
   "private": true,
   "scripts": {
-    "postinstall": "node -e \"require('node:fs').rmSync('.wrangler/deploy/config.json',{force:true})\"",
     "deploy": "wrangler deploy",
     "preview": "wrangler dev"
   },
