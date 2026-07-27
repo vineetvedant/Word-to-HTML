@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word HTML 1.0 Converter</title>
+  <link rel="stylesheet" href="styles.css?v=profile-links-2">
+</head>
+<body class="loading">
+  <div id="load">
+    <div>G</div>
+    <div>N</div>
+    <div>I</div>
+    <div>D</div>
+    <div>A</div>
+    <div>O</div>
+    <div>L</div>
+  </div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">H1</span>
+        <div>
+          <h1>Word HTML 1.0 Converter</h1>
+          <p>Convert Word to HTML 1.0 or HTML 1.0 to Word</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="openFileBtn" class="icon-button" title="Open HTML or text file" aria-label="Open file">↥</button>
+        <button id="copyBtn" class="icon-button" title="Copy output" aria-label="Copy output">⧉</button>
+        <button id="themeToggleBtn" class="icon-button" title="Toggle dark/light mode" aria-label="Toggle theme">🌙</button>
+        <button id="aboutBtn" class="icon-button" title="About the developer" aria-label="About developer">i</button>
+        <button id="downloadBtn" class="primary-button" type="button">Download</button>
+        <div class="social-links" aria-label="Profile links">
+          <a class="social-link" href="https://github.com/vineetvedant" target="_blank" rel="noopener noreferrer" title="GitHub profile" aria-label="Open GitHub profile">
+            <img src="assets/github-logo.svg" alt="GitHub logo">
+            <span>GitHub</span>
+          </a>
+          <a class="social-link" href="https://www.linkedin.com/in/vedant-singh-2550b2202/" target="_blank" rel="noopener noreferrer" title="LinkedIn profile" aria-label="Open LinkedIn profile">
+            <img src="assets/linkedin-logo.svg" alt="LinkedIn logo">
+            <span>LinkedIn</span>
+          </a>
+        </div>
+        <input id="fileInput" type="file" accept=".html,.htm,.txt,text/html,text/plain" hidden>
+      </div>
+    </header>
+
+    <section class="workspace" aria-label="Converter workspace">
+      <aside class="settings-panel" aria-label="Cleaning settings">
+        <div class="tabs" role="tablist" aria-label="Editor mode">
+          <button class="tab active" id="wordTab" type="button" role="tab" aria-selected="true">Word to HTML</button>
+          <button class="tab" id="htmlTab" type="button" role="tab" aria-selected="false">HTML to Word</button>
+        </div>
+
+        <div class="option-group">
+          <label><input type="checkbox" id="removeEmpty" checked> Remove empty tags</label>
+          <label><input type="checkbox" id="keepLinks" checked> Smart hyperlinks</label>
+          <label><input type="checkbox" id="keepImages" checked> Keep images</label>
+          <label><input type="checkbox" id="keepTables" checked> Keep tables</label>
+          <label><input type="checkbox" id="keepLists" checked> Keep lists</label>
+          <label><input type="checkbox" id="keepFormatting" checked> Keep formatting</label>
+          <label><input type="checkbox" id="removeComments" checked> Remove comments</label>
+        </div>
+
+        <div class="option-group">
+          <label for="wrapMode">Document wrapper</label>
+          <select id="wrapMode">
+            <option value="document">Full HTML 1.0 page</option>
+            <option value="fragment">HTML 1.0 fragment</option>
+          </select>
+        </div>
+
+        <div class="stats">
+          <div>
+            <span id="wordCount">0</span>
+            <small>words</small>
+          </div>
+          <div>
+            <span id="charCount">0</span>
+            <small>chars</small>
+          </div>
+          <div>
+            <span id="tagCount">0</span>
+            <small>tags</small>
+          </div>
+        </div>
+      </aside>
+
+      <section class="editor-column" aria-label="Input editor">
+        <div class="panel-heading editor-heading">
+          <h2 id="inputTitle">Word Input</h2>
+          <div class="heading-actions">
+            <button id="copyInputBtn" class="small-button" type="button" title="Copy input" aria-label="Copy input">Copy</button>
+            <button id="clearBtn" class="small-button" type="button" title="Clear" aria-label="Clear">Clear</button>
+          </div>
+          <div id="formatToolbar" class="word-toolbar" aria-label="Word editor toolbar">
+            <div class="menu-row" aria-label="Editor menus">
+              <button type="button" data-menu="file">File ▾</button>
+              <button type="button" data-menu="edit">Edit ▾</button>
+              <button type="button" data-menu="insert">Insert ▾</button>
+              <button type="button" data-menu="view">View ▾</button>
+              <button type="button" data-menu="format">Format ▾</button>
+              <button type="button" data-menu="table">Table ▾</button>
+              <button type="button" data-menu="tools">Tools ▾</button>
+            </div>
+            <div class="format-row" aria-label="Formatting controls">
+              <button data-command="undo" type="button" title="Undo" aria-label="Undo">↶</button>
+              <button data-command="redo" type="button" title="Redo" aria-label="Redo">↷</button>
+              <button id="copyWordBtn" type="button" title="Copy Word input" aria-label="Copy Word input">⧉</button>
+              <button id="sourceBtn" type="button" title="Use current output as HTML input" aria-label="Use source">‹›</button>
+              <button data-command="removeFormat" type="button" title="Clear formatting" aria-label="Clear formatting">T×</button>
+              <select id="formatBlock" title="Format block" aria-label="Format block">
+                <option value="p">Formats</option>
+                <option value="h1">Heading 1</option>
+                <option value="h2">Heading 2</option>
+                <option value="h3">Heading 3</option>
+                <option value="pre">Preformatted</option>
+              </select>
+              <button data-command="bold" type="button" title="Bold" aria-label="Bold"><strong>B</strong></button>
+              <button data-command="italic" type="button" title="Italic" aria-label="Italic"><em>I</em></button>
+              <button data-command="underline" type="button" title="Underline" aria-label="Underline"><u>U</u></button>
+              <button data-command="justifyLeft" type="button" title="Align left" aria-label="Align left">≡</button>
+              <button data-command="justifyCenter" type="button" title="Align center" aria-label="Align center">≣</button>
+              <button data-command="justifyRight" type="button" title="Align right" aria-label="Align right">≡</button>
+              <button data-command="justifyFull" type="button" title="Justify" aria-label="Justify">▤</button>
+              <button data-command="insertUnorderedList" type="button" title="Bulleted list" aria-label="Bulleted list">•☰</button>
+              <button data-command="insertOrderedList" type="button" title="Numbered list" aria-label="Numbered list">1☰</button>
+              <button data-command="outdent" type="button" title="Outdent" aria-label="Outdent">⇤</button>
+              <button data-command="indent" type="button" title="Indent" aria-label="Indent">⇥</button>
+              <button id="linkBtn" type="button" title="Insert link" aria-label="Insert link">🔗</button>
+              <button id="imageBtn" type="button" title="Insert image" aria-label="Insert image">▧</button>
+              <button id="printBtn" type="button" title="Print" aria-label="Print">⎙</button>
+              <button id="previewBtn" type="button" title="Focus preview" aria-label="Focus preview">◉</button>
+              <label class="color-control" title="Text color" aria-label="Text color">
+                A
+                <input id="textColor" type="color" value="#18221b">
+              </label>
+              <button id="emojiBtn" type="button" title="Insert smile" aria-label="Insert smile">☺</button>
+              <button id="tableBtn" type="button" title="Table tools" aria-label="Table tools">▦⌄</button>
+            </div>
+            <div id="tablePanel" class="table-panel hidden" aria-label="Table tools panel">
+              <div class="table-menu">
+                <button id="insertTableMenuBtn" class="active" type="button">▦ Insert table ›</button>
+                <button id="tablePropertiesBtn" type="button">Table properties</button>
+                <button id="deleteTableBtn" type="button">Delete table</button>
+                <hr>
+                <button id="cellMenuBtn" type="button" data-table-submenu="cell">Cell ›</button>
+                <button id="rowMenuBtn" type="button" data-table-submenu="row">Row ›</button>
+                <button id="columnMenuBtn" type="button" data-table-submenu="column">Column ›</button>
+              </div>
+              <div id="tableSubmenu" class="table-submenu hidden" aria-label="Table submenu">
+                <button type="button" data-table-action="cell-left">Cell align left</button>
+                <button type="button" data-table-action="cell-center">Cell align center</button>
+                <button type="button" data-table-action="cell-right">Cell align right</button>
+                <button type="button" data-table-action="row-add">Insert row</button>
+                <button type="button" data-table-action="row-remove">Delete row</button>
+                <button type="button" data-table-action="column-add">Insert column</button>
+                <button type="button" data-table-action="column-remove">Delete column</button>
+              </div>
+              <div class="table-grid-wrap">
+                <div id="tableGrid" class="table-grid" aria-label="Choose table size"></div>
+                <div id="tableGridSize" class="table-grid-size">1 x 1</div>
+              </div>
+            </div>
+          </div>
+          <div id="htmlToolbar" class="html-toolbar hidden" aria-label="HTML editor toolbar">
+            <button id="htmlUndoBtn" type="button" title="Undo" aria-label="Undo">↶</button>
+            <button id="copyHtmlInputBtn" type="button" title="Copy HTML input" aria-label="Copy HTML input">⧉</button>
+            <button id="htmlFileBtn" type="button" title="Open HTML file" aria-label="Open HTML file">◼</button>
+            <button id="htmlCleanBtn" type="button" title="Clean and format HTML" aria-label="Clean and format HTML">▤</button>
+            <button id="htmlBeautifyBtn" type="button" title="Beautify HTML" aria-label="Beautify HTML">{ }</button>
+            <button id="htmlMinifyBtn" type="button" title="Minify HTML" aria-label="Minify HTML">≡</button>
+            <button id="htmlValidateBtn" type="button" title="Validate HTML 1.0" aria-label="Validate HTML 1.0">✓</button>
+          </div>
+        </div>
+
+        <div id="wordEditor" class="rich-editor" contenteditable="true" spellcheck="true">
+          <p><b>Paste from Word here.</b></p>
+          <p>The converter keeps straightforward text structure and produces simple HTML 1.0 output.</p>
+        </div>
+        <textarea id="htmlEditor" class="html-editor hidden" spellcheck="false"></textarea>
+      </section>
+
+      <section class="output-column" aria-label="Output">
+        <div class="panel-heading">
+          <h2 id="outputTitle">HTML 1.0 Output</h2>
+          <div class="heading-actions">
+            <button id="copyOutputBtn" type="button" class="small-button">Copy</button>
+            <button id="refreshBtn" type="button" class="small-button">Refresh</button>
+          </div>
+        </div>
+        <textarea id="outputHtml" class="output-editor" spellcheck="false" readonly></textarea>
+        <div id="wordOutput" class="word-output hidden" tabindex="0" aria-label="Word output"></div>
+        <div class="preview">
+          <div class="preview-title">Preview</div>
+          <iframe id="previewFrame" title="HTML preview"></iframe>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="aboutModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle">
+    <div class="modal-content">
+      <button id="closeAboutBtn" class="modal-close" aria-label="Close about dialog">×</button>
+      <h2 id="aboutModalTitle">About the developer</h2>
+      <p>Hi, I’m Vedant Singh. I created this Word ↔ HTML 1.0 converter to help you cleanly transform Word content into classic HTML.</p>
+      <p>Connect with me on GitHub and LinkedIn for more projects and updates.</p>
+      <div class="about-links">
+        <a class="social-link about-link" href="https://github.com/vineetvedant" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="social-link about-link" href="https://www.linkedin.com/in/vedant-singh-2550b2202/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+https://html2word-vedant.thescripter.org/
+
+Cloudflare named tunnel is configured through the provided token.
+Local project URL: http://127.0.0.1:8080/vedant/
+Updated: Tue 30 Jun 05:17:52 IST 2026
