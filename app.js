@@ -134,6 +134,7 @@ function cleanHtml(source, wrapper = wrapMode.value) {
   const parser = new DOMParser();
   const hasDocumentShell = /<!doctype|<\/?(html|head|body)\b/i.test(source);
   const doc = parser.parseFromString(hasDocumentShell ? source : `<body>${source}</body>`, "text/html");
+  doc.querySelectorAll("script, style, iframe, object, embed, noscript, frame, frameset, svg, link").forEach((el) => el.remove());
   if (removeComments.checked) {
     removeCommentNodes(doc.body);
   }
@@ -185,6 +186,11 @@ function normalizeNode(node) {
 
 function normalizeElement(element) {
   const tag = element.tagName;
+
+  if (["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "APPLET", "NOSCRIPT", "FRAME", "FRAMESET", "SVG"].includes(tag)) {
+    element.remove();
+    return;
+  }
 
   if (!keepFormatting.checked && ["B", "I", "U", "STRONG", "EM"].includes(tag)) {
     unwrap(element);
@@ -242,6 +248,21 @@ function normalizeElement(element) {
 
     if (!keepLinkAttribute && !keepSafeAttribute) {
       element.removeAttribute(attribute.name);
+      return;
+    }
+
+    if (tag === "A" && name === "href") {
+      const val = attribute.value.trim().toLowerCase();
+      if (val.startsWith("javascript:") || val.startsWith("vbscript:") || val.startsWith("data:")) {
+        element.removeAttribute("href");
+      }
+    }
+
+    if (tag === "IMG" && name === "src") {
+      const val = attribute.value.trim().toLowerCase();
+      if (val.startsWith("javascript:") || val.startsWith("vbscript:")) {
+        element.removeAttribute("src");
+      }
     }
   });
 
@@ -304,7 +325,12 @@ function linkifyTextNodes(root) {
 function createSmartLink(doc, text) {
   const link = doc.createElement("a");
   const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
-  link.href = isEmail ? `mailto:${text}` : text.replace(/^www\./i, "https://www.");
+  const href = isEmail ? `mailto:${text}` : text.replace(/^www\./i, "https://www.");
+  if (/^(https?:\/\/|mailto:)/i.test(href)) {
+    link.href = href;
+  } else {
+    link.href = `https://${href}`;
+  }
   link.textContent = text;
   return link;
 }
@@ -1104,6 +1130,95 @@ document.getElementById("clearBtn").addEventListener("click", () => {
   updateOutput();
 });
 
+const loadSampleBtn = document.getElementById("loadSampleBtn");
+const presetDefaultBtn = document.getElementById("presetDefaultBtn");
+const presetCleanBtn = document.getElementById("presetCleanBtn");
+const presetExtremeBtn = document.getElementById("presetExtremeBtn");
+
+function loadSampleDocument() {
+  if (activeMode !== "word") {
+    setMode("word");
+  }
+  wordEditor.innerHTML = `<h1>Project Performance Summary</h1>
+<p>This is an <b>interactive sample document</b> demonstrating real-time conversion from rich text into clean, standard-compliant <i>HTML 1.0</i> markup.</p>
+<h2>Key Capabilities</h2>
+<ul>
+  <li><b>Zero Server Uploads:</b> 100% private in-browser conversion.</li>
+  <li><b>Edge Powered:</b> Sub-second asset delivery over Cloudflare Pages.</li>
+  <li><b>Clean HTML:</b> Strips proprietary Office bloat, mso styles, and nested spans.</li>
+</ul>
+<h2>Specifications Matrix</h2>
+<table border="1" cellpadding="4" cellspacing="0" width="80%">
+  <tr>
+    <th>Feature</th>
+    <th>Specification</th>
+  </tr>
+  <tr>
+    <td>Protocol Security</td>
+    <td>Zero XSS &bull; Sandboxed Preview</td>
+  </tr>
+  <tr>
+    <td>Speed</td>
+    <td>Core Web Vitals 100/100</td>
+  </tr>
+  <tr>
+    <td>Linkification</td>
+    <td>https://wordtohtml1.0.sshconnect.space/</td>
+  </tr>
+</table>
+<p>Author: <a href="https://www.sshconnect.space/">Vedant Singh</a> &bull; Email: <a href="mailto:vedant@sshconnect.space">vedant@sshconnect.space</a></p>`;
+  updateOutput();
+}
+
+loadSampleBtn?.addEventListener("click", loadSampleDocument);
+
+presetDefaultBtn?.addEventListener("click", () => {
+  removeEmpty.checked = true;
+  keepLinks.checked = true;
+  keepImages.checked = true;
+  keepTables.checked = true;
+  keepLists.checked = true;
+  keepFormatting.checked = true;
+  removeComments.checked = true;
+  wrapMode.value = "document";
+  updateOutput();
+});
+
+presetCleanBtn?.addEventListener("click", () => {
+  removeEmpty.checked = true;
+  keepLinks.checked = true;
+  keepImages.checked = false;
+  keepTables.checked = true;
+  keepLists.checked = true;
+  keepFormatting.checked = true;
+  removeComments.checked = true;
+  wrapMode.value = "fragment";
+  updateOutput();
+});
+
+presetExtremeBtn?.addEventListener("click", () => {
+  removeEmpty.checked = true;
+  keepLinks.checked = false;
+  keepImages.checked = false;
+  keepTables.checked = false;
+  keepLists.checked = false;
+  keepFormatting.checked = false;
+  removeComments.checked = true;
+  wrapMode.value = "fragment";
+  updateOutput();
+});
+
+document.addEventListener("keydown", (event) => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
+    event.preventDefault();
+    downloadHtml();
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+    event.preventDefault();
+    copyOutput();
+  }
+});
+
 document.getElementById("openFileBtn").addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
@@ -1156,8 +1271,6 @@ document.addEventListener("keydown", (event) => {
 
 const savedTheme = localStorage.getItem("theme") || "light";
 applyTheme(savedTheme);
-
-toggleAboutModal(true);
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("load");

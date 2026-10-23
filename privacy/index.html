@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy &amp; Security Architecture | Word HTML 1.0 Converter</title>
+  <meta name="description" content="Transparent privacy policy and technical security verification for Word HTML 1.0 Converter. 100% client-side in-browser processing with zero document uploads.">
+  <link rel="canonical" href="https://wordtohtml1.0.sshconnect.space/privacy/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wordtohtml1.0.sshconnect.space/privacy/">
+  <meta property="og:title" content="Privacy Policy &amp; Security Architecture | Word HTML 1.0 Converter">
+  <meta property="og:description" content="Detailed verification that your documents, text, and files remain strictly confidential and never leave your web browser.">
+  <meta property="og:site_name" content="Word HTML 1.0 Converter">
+
+  <link rel="stylesheet" href="../styles.css?v=seo-enhanced-1">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Privacy Policy & Security Architecture",
+        "description": "Technical verification and policy explaining zero document retention, client-side processing, and security safeguards.",
+        "url": "https://wordtohtml1.0.sshconnect.space/privacy/",
+        "author": {
+          "@type": "Person",
+          "name": "Vedant Singh",
+          "url": "https://www.sshconnect.space/"
+        },
+        "datePublished": "2026-10-23",
+        "dateModified": "2026-10-23"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://wordtohtml1.0.sshconnect.space/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Privacy Policy",
+            "item": "https://wordtohtml1.0.sshconnect.space/privacy/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <a href="../" style="text-decoration:none; display:flex; align-items:center; gap:12px; color:inherit;">
+          <span class="brand-mark" aria-hidden="true">H1</span>
+          <div>
+            <h1 style="font-size:22px; margin:0;">Word HTML 1.0 Converter</h1>
+            <p style="margin:3px 0 0; color:var(--muted); font-size:13px;">Online Conversion Utility</p>
+          </div>
+        </a>
+      </div>
+      <div class="top-actions">
+        <a href="../" class="primary-button" style="text-decoration:none;">Open Converter</a>
+      </div>
+    </header>
+
+    <article class="article-shell" aria-label="Privacy Documentation">
+      <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+        <a href="../">Home</a> &rsaquo; <span>Privacy Policy</span>
+      </nav>
+
+      <div class="article-header">
+        <h1>Privacy Policy &amp; Security Architecture</h1>
+        <p class="lead">Complete transparency on data privacy, client-side processing verification, and how we protect your confidential documents.</p>
+        <div class="article-meta">
+          <span>By Vedant Singh</span> &bull; <span>Effective October 2026</span>
+        </div>
+      </div>
+
+      <section class="content-section" style="margin-bottom: 24px;">
+        <h2>1. The Core Privacy Principle: Zero Document Uploads</h2>
+        <p>Many online file converters transmit your documents, contracts, and spreadsheets to third-party cloud servers for background rendering. This creates severe compliance risks under GDPR, HIPAA, and corporate confidentiality policies.</p>
+        <p><strong>Word HTML 1.0 Converter was built with a fundamental architectural constraint: zero server-side document handling.</strong></p>
+        <ul>
+          <li>All parsing is executed using the browser's native <code>DOMParser</code> API.</li>
+          <li>Text editing relies on the browser's built-in <code>contenteditable</code> and <code>execCommand</code> APIs.</li>
+          <li>File downloads are created on-the-fly in browser memory using <code>Blob</code> and <code>URL.createObjectURL</code>.</li>
+          <li>At no point are your document contents, pasted text, filenames, or generated HTML code sent across the network.</li>
+        </ul>
+      </section>
+
+      <section class="content-section" style="margin-bottom: 24px;">
+        <h2>2. Technical Verification: How to Audit Client-Side Execution</h2>
+        <p>You do not need to take our word for it. You can independently verify our zero-transmission architecture using your browser's Developer Tools:</p>
+        <ol>
+          <li>Press <code>F12</code> or right-click anywhere on the page and choose <em>Inspect</em>.</li>
+          <li>Click the <strong>Network</strong> tab.</li>
+          <li>Paste sensitive text into the <em>Word Input</em> editor, adjust cleanup toggles, or download a <code>.doc</code> file.</li>
+          <li>Notice that <strong>zero outbound HTTP POST or PUT requests are made</strong>. No data packets leave your device.</li>
+          <li>Disconnect your Wi-Fi or enable Airplane Mode: the converter continues functioning with full fidelity completely offline.</li>
+        </ol>
+      </section>
+
+      <section class="content-section" style="margin-bottom: 24px;">
+        <h2>3. Output Security &amp; XSS Prevention</h2>
+        <p>Treating user-pasted markup as untrusted is essential to prevent Cross-Site Scripting (XSS) attacks:</p>
+        <ul>
+          <li><strong>Script &amp; Dangerous Tag Purging:</strong> Elements like <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, and <code>&lt;embed&gt;</code> are removed immediately upon parsing.</li>
+          <li><strong>Protocol Sanitization:</strong> Hyperlinks and image sources using <code>javascript:</code>, <code>vbscript:</code>, or non-image <code>data:</code> URIs are automatically stripped.</li>
+          <li><strong>Sandboxed Preview:</strong> The live preview rendering uses an <code>&lt;iframe sandbox="allow-same-origin"&gt;</code> container, strictly preventing script execution within the preview context.</li>
+        </ul>
+      </section>
+
+      <section class="content-section" style="margin-bottom: 24px;">
+        <h2>4. Local Storage and Cookies</h2>
+        <p>The converter does not set tracking cookies. It uses the browser's local storage solely to remember your user interface preference (such as dark mode vs. light mode via <code>localStorage.getItem("theme")</code>).</p>
+      </section>
+
+      <section class="content-section" style="margin-bottom: 24px;">
+        <h2>5. Developer Contact</h2>
+        <p>If you have security questions, vulnerability disclosures, or technical inquiries regarding this application, please contact the developer:</p>
+        <p><strong>Vedant Singh</strong><br>
+        Portfolio: <a href="https://www.sshconnect.space/" target="_blank" rel="noopener noreferrer">https://www.sshconnect.space/</a><br>
+        GitHub: <a href="https://github.com/vineetvedant" target="_blank" rel="noopener noreferrer">@vineetvedant</a></p>
+      </section>
+
+      <div class="cta-box">
+        <h3>Use the converter with total peace of mind</h3>
+        <a href="../" class="cta-button">Open Converter</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>&copy; 2026 Word HTML 1.0 Converter. Created by <a href="https://www.sshconnect.space/" target="_blank" rel="noopener noreferrer">Vedant Singh</a>.</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="../">Home</a>
+          <a href="../how-to-use/">How to Use</a>
+          <a href="../word-to-html/">Word to HTML</a>
+          <a href="../html-to-word/">HTML to Word</a>
+          <a href="../word-to-clean-html/">Clean HTML</a>
+          <a href="../html-1-0-explained/">HTML 1.0 Specs</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="../about/">About</a>
+        </nav>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

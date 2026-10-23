@@ -1,0 +1,9 @@
+# robots.txt for Word HTML 1.0 Converter
+# Website: https://wordtohtml1.0.sshconnect.space/
+
+User-agent: *
+Allow: /
+Disallow: /dist/
+
+# Inform search engines and crawlers of sitemap location
+Sitemap: https://wordtohtml1.0.sshconnect.space/sitemap.xml

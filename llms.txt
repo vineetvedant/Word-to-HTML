@@ -1,0 +1,36 @@
+# Word HTML 1.0 Converter
+
+> Free, browser-based, client-side utility converting Microsoft Word, Google Docs, and rich text into clean, simplified HTML 1.0 compliant markup, and converting HTML into Word-compatible .doc files.
+
+- Website: https://wordtohtml1.0.sshconnect.space/
+- Developer: Vedant Singh (https://www.sshconnect.space/)
+- GitHub: https://github.com/vineetvedant/Word-to-HTML
+
+## Core Capabilities
+- **Word to HTML**: Pasted rich text from Microsoft Word or Google Docs is converted into clean, standard-compliant HTML 1.0 markup or semantic HTML fragments.
+- **HTML to Word**: Raw HTML input is sanitized and rendered as formatted text, with instant one-click download as Word-compatible `.doc` files.
+- **Privacy & Security**: 100% client-side processing using browser DOMParser and execCommand APIs. Zero files or documents are ever uploaded to a server or external database.
+- **Cleanup Engine**: Automatically strips proprietary Microsoft Office bloat (`mso-*` styles, `o:p`, `w:WordDocument`, inline CSS styles, unnecessary classes, `<div>`, `<span>`, and conditional comments).
+- **Smart Linkify**: Automatically recognizes URLs and email addresses and converts them into safe `<a href>` links.
+- **Live Visual Sync**: Bidirectional selection reflection across the rich editor, raw HTML output, and sandboxed preview iframe.
+
+## Supported HTML 1.0 Specifications & Whitelisted Elements
+- Structure: `<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 1.0//EN">`, `<html>`, `<head>`, `<title>`, `<body>`, `<p>`, `<br>`, `<pre>`
+- Text Formatting: `<b>` (bold), `<i>` (italic), `<u>` (underline)
+- Headings: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>` (with optional `align` attribute)
+- Lists: `<ul>`, `<ol>`, `<li>`, `<dl>`, `<dt>`, `<dd>`
+- Tables: `<table>`, `<tbody>`, `<tr>`, `<td>`, `<th>` (with `border`, `cellpadding`, `cellspacing`, `align`, `width`, `colspan`, `rowspan`)
+- Links & Media: `<a href="" name="">`, `<img src="" alt="">`
+
+## Important Limitations
+- The tool operates on pasted rich text or opened text/HTML files (.html, .htm, .txt). It does not parse binary compressed `.docx` zip containers directly.
+- Modern CSS styling, JavaScript, and complex layout divs are stripped intentionally to adhere to clean HTML / HTML 1.0 specifications.
+
+## Documentation & Guides
+- [How to Use the Converter](https://wordtohtml1.0.sshconnect.space/how-to-use/)
+- [Word to HTML Guide](https://wordtohtml1.0.sshconnect.space/word-to-html/)
+- [HTML to Word Conversion](https://wordtohtml1.0.sshconnect.space/html-to-word/)
+- [Cleaning Bloated Word HTML](https://wordtohtml1.0.sshconnect.space/word-to-clean-html/)
+- [HTML 1.0 Standards Explained](https://wordtohtml1.0.sshconnect.space/html-1-0-explained/)
+- [Privacy Policy & Client-Side Verification](https://wordtohtml1.0.sshconnect.space/privacy/)
+- [About the Developer](https://wordtohtml1.0.sshconnect.space/about/)

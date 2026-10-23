@@ -1,0 +1,5 @@
+# Cloudflare Pages Redirects
+# Canonical redirect rules and clean URLs
+
+/index.html   /   301
+/home         /   301
