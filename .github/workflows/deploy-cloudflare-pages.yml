@@ -4,15 +4,17 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-test:
+    name: Build & Verify QA
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -24,26 +26,36 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Run SEO & Integrity QA Tests
+      - name: Run Technical SEO & Integrity QA Tests
         run: npm test
 
-      - name: Deploy to Cloudflare Pages via Wrangler
-        if: ${{ secrets.CF_API_TOKEN != '' || secrets.CLOUDFLARE_API_TOKEN != '' }}
+  deploy-wrangler:
+    name: Optional Wrangler Deploy
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: ${{ secrets.CF_API_TOKEN != '' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy via Wrangler
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
           command: pages deploy dist --project-name=word-to-html
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Cloudflare Pages Git Integration Notice
-        if: ${{ secrets.CF_API_TOKEN == '' && secrets.CLOUDFLARE_API_TOKEN == '' }}
-        run: |
-          echo "================================================================================="
-          echo "INFO: Direct CF_API_TOKEN / CLOUDFLARE_API_TOKEN not found in GitHub Secrets."
-          echo "All 148 SEO & production build tests passed successfully."
-          echo "Production deployment is handled directly via Cloudflare Pages Git Integration."
-          echo "To enable direct Wrangler CI deployment, add CF_API_TOKEN & CF_ACCOUNT_ID to repo secrets."
-          echo "================================================================================="
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
