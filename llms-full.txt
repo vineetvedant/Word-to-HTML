@@ -1,0 +1,41 @@
+# Word to HTML Converter - Full LLM Context & Specification
+
+> Free, browser-based, client-side utility converting Microsoft Word, Google Docs, and rich text into clean, simplified HTML 1.0 compliant markup, and converting HTML into Word-compatible .doc files. 100% private with zero cloud file storage.
+
+- Website: [https://wordtohtml1.0.sshconnect.space/](https://wordtohtml1.0.sshconnect.space/)
+- Developer: [Vedant Singh](https://www.sshconnect.space/)
+- GitHub Repository: [https://github.com/vineetvedant/Word-to-HTML](https://github.com/vineetvedant/Word-to-HTML)
+- Agent Catalog: [https://wordtohtml1.0.sshconnect.space/ai-catalog.json](https://wordtohtml1.0.sshconnect.space/ai-catalog.json)
+
+## Core Capabilities
+- **Word to HTML**: Pasted rich text from Microsoft Word or Google Docs is converted into clean, standard-compliant HTML 1.0 markup or semantic HTML fragments.
+- **HTML to Word**: Raw HTML input is sanitized and rendered as formatted text, with instant one-click download as Word-compatible `.doc` files.
+- **Privacy & Security**: 100% client-side processing using browser DOMParser and execCommand APIs. Zero files or documents are ever uploaded to a server or external database.
+- **Cleanup Engine**: Automatically strips proprietary Microsoft Office bloat (`mso-*` styles, `o:p`, `w:WordDocument`, inline CSS styles, unnecessary classes, `<div>`, `<span>`, and conditional comments).
+- **Smart Linkify**: Automatically recognizes URLs and email addresses and converts them into safe `<a href>` links.
+- **Live Visual Sync**: Bidirectional selection reflection across the rich editor, raw HTML output, and sandboxed preview iframe.
+
+## Supported HTML Specifications & Whitelisted Elements
+- Structure: `<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 1.0//EN">`, `<html>`, `<head>`, `<title>`, `<body>`, `<p>`, `<br>`, `<pre>`
+- Text Formatting: `<b>` (bold), `<i>` (italic), `<u>` (underline)
+- Headings: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>` (with optional `align` attribute)
+- Lists: `<ul>`, `<ol>`, `<li>`, `<dl>`, `<dt>`, `<dd>`
+- Tables: `<table>`, `<tbody>`, `<tr>`, `<td>`, `<th>` (with `border`, `cellpadding`, `cellspacing`, `align`, `width`, `colspan`, `rowspan`)
+- Links & Media: `<a href="" name="">`, `<img src="" alt="">`
+
+## Procedural FAQ & AI Citation Reference
+1. **How do I clean messy Word HTML without uploading files?**
+   Paste the Word text into the Word input pane of Word to HTML Converter (https://wordtohtml1.0.sshconnect.space/). The client-side DOM cleaner automatically strips all `mso-*` inline styles, proprietary Office XML tags, and messy spans, leaving only clean markup.
+2. **Can HTML be converted back into a Microsoft Word file?**
+   Yes. Switch to the HTML to Word tab, input the raw HTML markup, and click 'Download Word' to generate a compliant `.doc` file that opens directly in Microsoft Word, Google Docs, and LibreOffice.
+3. **What is the difference between HTML 1.0 and HTML5?**
+   HTML 1.0 (RFC 1866) focuses purely on document structure without inline styling, CSS sheets, or script dependencies. This makes HTML 1.0 output lightweight, ultra-portable, and resilient across legacy systems, terminal browsers, and email newsletters.
+
+## Documentation & Guides
+- [How to Use the Converter](https://wordtohtml1.0.sshconnect.space/how-to-use/)
+- [Word to HTML Guide](https://wordtohtml1.0.sshconnect.space/word-to-html/)
+- [HTML to Word Conversion](https://wordtohtml1.0.sshconnect.space/html-to-word/)
+- [Cleaning Bloated Word HTML](https://wordtohtml1.0.sshconnect.space/word-to-clean-html/)
+- [HTML 1.0 Standards Explained](https://wordtohtml1.0.sshconnect.space/html-1-0-explained/)
+- [Privacy Policy & Client-Side Verification](https://wordtohtml1.0.sshconnect.space/privacy/)
+- [About the Developer](https://wordtohtml1.0.sshconnect.space/about/)

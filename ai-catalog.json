@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Word to HTML Converter Agent Catalog",
+  "description": "Agentic Resource Discovery (ARD) catalog for Word to HTML Converter - 100% in-browser client-side document conversion utility.",
+  "url": "https://wordtohtml1.0.sshconnect.space/",
+  "version": "1.0.0",
+  "publisher": {
+    "name": "Vedant Singh",
+    "url": "https://www.sshconnect.space/"
+  },
+  "capabilities": [
+    {
+      "id": "word-to-html",
+      "name": "Word to Clean HTML Converter",
+      "description": "Transforms rich text from Microsoft Word, Google Docs, and RTF into clean HTML 1.0 or modern semantic HTML, purging MSO tags and inline CSS.",
+      "type": "client-tool",
+      "target": "https://wordtohtml1.0.sshconnect.space/",
+      "input": {
+        "format": "text/html, text/plain",
+        "description": "Pasted rich formatted text or HTML markup"
+      },
+      "output": {
+        "format": "text/html",
+        "description": "Clean, sanitized HTML 1.0 markup or fragment"
+      }
+    },
+    {
+      "id": "html-to-word",
+      "name": "HTML to Word Document (.doc) Converter",
+      "description": "Converts raw HTML strings and formatted markup into editable Microsoft Word (.doc) files.",
+      "type": "client-tool",
+      "target": "https://wordtohtml1.0.sshconnect.space/html-to-word/",
+      "input": {
+        "format": "text/html",
+        "description": "Raw HTML source code"
+      },
+      "output": {
+        "format": "application/msword",
+        "description": "Standard .doc binary document"
+      }
+    }
+  ],
+  "resources": [
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/index.md",
+      "title": "Homepage Documentation (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/word-to-html/index.md",
+      "title": "Word to HTML Guide (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/html-to-word/index.md",
+      "title": "HTML to Word Guide (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/word-to-clean-html/index.md",
+      "title": "Word to Clean HTML Guide (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/how-to-use/index.md",
+      "title": "How to Use Guide (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/privacy/index.md",
+      "title": "Privacy Policy (Markdown)"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/markdown",
+      "href": "https://wordtohtml1.0.sshconnect.space/about/index.md",
+      "title": "About Developer (Markdown)"
+    }
+  ]
+}

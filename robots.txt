@@ -1,9 +1,42 @@
-# robots.txt for Word HTML 1.0 Converter
+# robots.txt for Word HTML Converter
 # Website: https://wordtohtml1.0.sshconnect.space/
 
 User-agent: *
 Allow: /
 Disallow: /dist/
 
-# Inform search engines and crawlers of sitemap location
+# AI Search Engines & Conversational Agents (Permissive Search & Citations)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Agentic Discovery & Content Signals
+Content-Signal: search=yes, ai-train=no
+Agentmap: https://wordtohtml1.0.sshconnect.space/ai-catalog.json
 Sitemap: https://wordtohtml1.0.sshconnect.space/sitemap.xml

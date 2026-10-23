@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
-console.log("=== RUNNING ADVANCED TECHNICAL SEO & SITE INTEGRITY TESTS ===\n");
+console.log("=== RUNNING ADVANCED TECHNICAL SEO, GEO & AGENTIC INTEGRITY TESTS ===\n");
 
 let passed = 0;
 let failed = 0;
@@ -22,20 +22,30 @@ const distDir = "dist";
 console.log("1. Checking core files existence in dist/:");
 const requiredFiles = [
   "index.html",
+  "index.md",
   "app.js",
   "styles.css",
   "robots.txt",
   "sitemap.xml",
   "llms.txt",
+  "llms-full.txt",
+  "ai-catalog.json",
   "_headers",
   "_redirects",
   "how-to-use/index.html",
+  "how-to-use/index.md",
   "word-to-html/index.html",
+  "word-to-html/index.md",
   "html-to-word/index.html",
+  "html-to-word/index.md",
   "word-to-clean-html/index.html",
+  "word-to-clean-html/index.md",
   "html-1-0-explained/index.html",
+  "html-1-0-explained/index.md",
   "privacy/index.html",
-  "about/index.html"
+  "privacy/index.md",
+  "about/index.html",
+  "about/index.md"
 ];
 
 for (const file of requiredFiles) {
@@ -47,6 +57,12 @@ console.log("\n2. Validating robots.txt:");
 const robots = readFileSync(join(distDir, "robots.txt"), "utf-8");
 assert(robots.includes("User-agent: *"), "robots.txt contains User-agent: *");
 assert(robots.includes("Allow: /"), "robots.txt allows root");
+assert(robots.includes("GPTBot"), "robots.txt explicitly configures GPTBot");
+assert(robots.includes("ClaudeBot"), "robots.txt explicitly configures ClaudeBot");
+assert(robots.includes("Google-Extended"), "robots.txt explicitly configures Google-Extended");
+assert(robots.includes("PerplexityBot"), "robots.txt explicitly configures PerplexityBot");
+assert(robots.includes("Content-Signal: search=yes, ai-train=no"), "robots.txt has Content-Signal directive");
+assert(robots.includes("Agentmap: https://wordtohtml1.0.sshconnect.space/ai-catalog.json"), "robots.txt declares Agentmap");
 assert(robots.includes("Sitemap: https://wordtohtml1.0.sshconnect.space/sitemap.xml"), "robots.txt points to correct production sitemap");
 
 // 3. Verify sitemap.xml
@@ -64,16 +80,25 @@ assert(sitemap.includes("<loc>https://wordtohtml1.0.sshconnect.space/html-1-0-ex
 assert(sitemap.includes("<loc>https://wordtohtml1.0.sshconnect.space/privacy/</loc>"), "sitemap.xml has privacy URL");
 assert(sitemap.includes("<loc>https://wordtohtml1.0.sshconnect.space/about/</loc>"), "sitemap.xml has about URL");
 
-// 4. Verify llms.txt
-console.log("\n4. Validating llms.txt (GEO):");
+// 4. Verify llms.txt & llms-full.txt
+console.log("\n4. Validating llms.txt & llms-full.txt (GEO):");
 const llms = readFileSync(join(distDir, "llms.txt"), "utf-8");
 assert(llms.includes("# Word HTML 1.0 Converter"), "llms.txt has title");
 assert(llms.includes("https://wordtohtml1.0.sshconnect.space/"), "llms.txt has production website URL");
 assert(llms.includes("Vedant Singh"), "llms.txt attributes developer Vedant Singh");
-assert(llms.includes("Supported HTML 1.0 Specifications"), "llms.txt details supported specifications");
 
-// 5. Verify HTML pages metadata and JSON-LD
-console.log("\n5. Validating HTML metadata and Schema across all pages:");
+const llmsFull = readFileSync(join(distDir, "llms-full.txt"), "utf-8");
+assert(llmsFull.includes("# Word to HTML Converter - Full LLM Context"), "llms-full.txt has header");
+assert(llmsFull.includes("Procedural FAQ & AI Citation Reference"), "llms-full.txt provides procedural citation data");
+
+// 5. Verify ai-catalog.json (Agentic Resource Discovery)
+console.log("\n5. Validating ai-catalog.json:");
+const aiCatalog = JSON.parse(readFileSync(join(distDir, "ai-catalog.json"), "utf-8"));
+assert(aiCatalog.capabilities.length >= 2, "ai-catalog.json specifies capabilities");
+assert(aiCatalog.resources.length >= 7, "ai-catalog.json specifies resources");
+
+// 6. Verify HTML pages metadata and JSON-LD
+console.log("\n6. Validating HTML metadata, Speculation Rules, and Schema across all pages:");
 const pagesToTest = [
   { path: "index.html", expectedCanonical: "https://wordtohtml1.0.sshconnect.space/" },
   { path: "how-to-use/index.html", expectedCanonical: "https://wordtohtml1.0.sshconnect.space/how-to-use/" },
@@ -91,6 +116,8 @@ for (const { path: pagePath, expectedCanonical } of pagesToTest) {
   assert(content.includes("<title>"), `${pagePath} has <title> tag`);
   assert(content.includes('<meta name="description"'), `${pagePath} has meta description`);
   assert(content.includes(`<link rel="canonical" href="${expectedCanonical}">`), `${pagePath} has correct canonical URL (${expectedCanonical})`);
+  assert(content.includes('rel="alternate" type="text/markdown"'), `${pagePath} has markdown alternate link`);
+  assert(content.includes('type="speculationrules"'), `${pagePath} has Chrome Speculation Rules`);
   assert(content.includes('property="og:title"'), `${pagePath} has og:title`);
   assert(content.includes('property="og:url"'), `${pagePath} has og:url`);
   
@@ -107,35 +134,37 @@ for (const { path: pagePath, expectedCanonical } of pagesToTest) {
   }
 }
 
-// 6. Security & Performance checks in index.html
-console.log("\n6. Checking security & performance in index.html:");
+// 7. Security & Performance checks in index.html
+console.log("\n7. Checking security & performance in index.html:");
 const indexHtml = readFileSync(join(distDir, "index.html"), "utf-8");
 assert(!indexHtml.includes('<body class="loading">'), "index.html does not have blocking body.loading class");
 assert(!indexHtml.includes('<div id="load">'), "index.html does not have blocking loader overlay");
 assert(indexHtml.includes('sandbox="allow-same-origin"'), "previewFrame has sandbox attribute");
+assert(!indexHtml.includes('"@type": "HowTo"'), "index.html correctly excludes deprecated Google HowTo schema");
+assert(indexHtml.includes('"potentialAction"'), "index.html includes WebApplication potentialAction ConvertActions");
 
-// 7. Check app.js security & bug fixes
-console.log("\n7. Checking app.js security fixes:");
+// 8. Check app.js security & bug fixes
+console.log("\n8. Checking app.js security fixes:");
 const appJs = readFileSync(join(distDir, "app.js"), "utf-8");
 assert(!appJs.includes("toggleAboutModal(true);"), "app.js does not auto-open about modal on page load");
 assert(appJs.includes('javascript:') && appJs.includes('removeAttribute("href")'), "app.js strips javascript: href schemes");
 assert(appJs.includes('SCRIPT') && appJs.includes('element.remove()'), "app.js removes SCRIPT and dangerous tags");
 
-// 8. Check Cloudflare Pages _headers & _redirects
-console.log("\n8. Checking Cloudflare Pages configuration in dist/:");
+// 9. Check Cloudflare Pages _headers & _redirects
+console.log("\n9. Checking Cloudflare Pages configuration in dist/:");
 const headers = readFileSync(join(distDir, "_headers"), "utf-8");
 assert(headers.includes("X-Content-Type-Options: nosniff"), "_headers sets nosniff");
 assert(headers.includes("X-Frame-Options: SAMEORIGIN"), "_headers sets SAMEORIGIN");
+assert(headers.includes("Vary: Accept"), "_headers sets Vary: Accept for markdown negotiation");
 assert(headers.includes("Cache-Control: public, max-age=31536000, immutable"), "_headers sets immutable cache on static assets");
 
 const redirects = readFileSync(join(distDir, "_redirects"), "utf-8");
 assert(redirects.includes("/index.html"), "_redirects handles /index.html canonical redirect");
 
-// 9. Check interactive engagement features for Rank #1
-console.log("\n9. Checking high-engagement features for Google Rank #1:");
+// 10. Check interactive engagement features for Rank #1
+console.log("\n10. Checking high-engagement features for Google Rank #1:");
 assert(indexHtml.includes('id="loadSampleBtn"'), "index.html includes 1-click sample document button");
 assert(indexHtml.includes('id="presetCleanBtn"'), "index.html includes cleaning presets");
-assert(indexHtml.includes('"@type": "HowTo"'), "index.html includes Google HowTo rich snippet schema");
 assert(indexHtml.includes("Why Word HTML 1.0 Converter Is the #1 Alternative"), "index.html includes competitor comparison matrix");
 
 console.log(`\n========================================`);

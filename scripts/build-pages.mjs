@@ -3,11 +3,14 @@ import { cpSync, mkdirSync, rmSync } from "node:fs";
 const outputDirectory = "dist";
 const files = [
   "index.html",
+  "index.md",
   "app.js",
   "styles.css",
   "sitemap.xml",
   "robots.txt",
   "llms.txt",
+  "llms-full.txt",
+  "ai-catalog.json",
   "_headers",
   "_redirects"
 ];
